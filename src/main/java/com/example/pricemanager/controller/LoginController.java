@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.example.pricemanager.Service;
+import com.example.pricemanager.action.Action;
+import com.example.pricemanager.entity.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -33,6 +35,17 @@ public class LoginController implements Controller{
 
         registrationButton.setOnAction(actionEvent -> {
             Service.changeScene(registrationButton, "registration.fxml");
+        });
+
+        enterButton.setOnAction(actionEvent -> {
+            client.writeObject(Action.LOGIN);
+            client.writeObject(new User(loginField.getText(), passwordField.getText()));
+            if((boolean)client.readObject()){
+                Service.changeScene(registrationButton, "registration.fxml");
+            }
+            else {
+                loginField.setText("Try again");
+            }
         });
     }
 
