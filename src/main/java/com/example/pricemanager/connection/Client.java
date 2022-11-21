@@ -14,7 +14,7 @@ public class Client{
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
-            throw new RuntimeException("can't initialise", e);
+            throw new RuntimeException("Can't initialise", e);
         }
 
     }

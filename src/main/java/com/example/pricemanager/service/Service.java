@@ -1,19 +1,23 @@
-package com.example.pricemanager;
+package com.example.pricemanager.service;
 
+import com.example.pricemanager.Application;
 import com.example.pricemanager.connection.Client;
+import com.example.pricemanager.message.Action;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.net.Socket;
 
 public class Service {
-
     public static void changeScene(Button button, String fxmlFile) {
         Stage stage = (Stage) button.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(Service.class.getResource(fxmlFile));
+        FXMLLoader loader = new FXMLLoader(Application.class.getResource(fxmlFile));
         Scene scene = null;
 
         try {
@@ -35,4 +39,13 @@ public class Service {
         }
         return null;
     }
+
+    public static void showAlert(String string) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Alert");
+        alert.setHeaderText(null);
+        alert.setContentText(string);
+        alert.showAndWait();
+    }
+
 }

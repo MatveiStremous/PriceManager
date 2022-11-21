@@ -1,5 +1,6 @@
 package com.example.pricemanager;
 
+import com.example.pricemanager.controller.Controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -11,6 +12,8 @@ public class Application extends javafx.application.Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+
+        stage.setOnCloseRequest(Controller.closeEventHandler);
         stage.setTitle("PriceManager");
         stage.setScene(scene);
 
