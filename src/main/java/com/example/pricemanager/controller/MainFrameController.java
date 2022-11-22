@@ -27,5 +27,6 @@ public class MainFrameController implements Controller{
         if(user.getUserRole().equals(User.UserRole.USER_ROLE)) {
             adminButton.setVisible(false);
         }
+        System.out.println(Controller.user.getId());
     }
 }
