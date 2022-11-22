@@ -11,12 +11,12 @@
    <children>
       <Button fx:id="enterButton" layoutX="206.0" layoutY="188.0" mnemonicParsing="false" onAction="#onClickEnterButton" prefHeight="25.0" prefWidth="189.0" text="Войти" />
       <Button fx:id="registrationButton" layoutX="206.0" layoutY="228.0" mnemonicParsing="false" onAction="#onClickRegistrationButton" prefHeight="25.0" prefWidth="189.0" text="Регистрация" />
-      <TextField fx:id="loginField" layoutX="206.0" layoutY="104.0" prefHeight="25.0" prefWidth="189.0" promptText="Логин" />
+      <TextField fx:id="loginField" layoutX="206.0" layoutY="104.0" prefHeight="25.0" prefWidth="189.0" promptText="Логин" text="Matthew" />
       <Text layoutX="279.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вход">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <PasswordField fx:id="passwordField" layoutX="206.0" layoutY="149.0" prefHeight="25.0" prefWidth="189.0" promptText="Пароль" />
+      <PasswordField fx:id="passwordField" layoutX="206.0" layoutY="149.0" prefHeight="25.0" prefWidth="189.0" promptText="Пароль" text="Matthew" />
    </children>
 </AnchorPane>

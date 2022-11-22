@@ -9,4 +9,5 @@ module com.example.pricemanager {
     opens com.example.pricemanager.controller to javafx.fxml;
     exports com.example.pricemanager.service;
     opens com.example.pricemanager.service to javafx.fxml;
+    opens com.example.pricemanager.entity to javafx.base;
 }
