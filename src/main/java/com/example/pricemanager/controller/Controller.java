@@ -21,7 +21,7 @@ public interface Controller {
         System.exit(0);
     };
 
-    static void updateUserRole(){
+    static void updateUserRole() {
         client.writeObject(Action.CHECK_ROLE);
         client.writeObject(user.getLogin());
         user.setUserRole((User.UserRole) client.readObject());

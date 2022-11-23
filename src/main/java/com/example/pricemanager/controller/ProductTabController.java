@@ -1,7 +1,6 @@
 package com.example.pricemanager.controller;
 
 import com.example.pricemanager.entity.Product;
-import com.example.pricemanager.entity.User;
 import com.example.pricemanager.message.Action;
 import com.example.pricemanager.service.Service;
 import javafx.collections.FXCollections;
@@ -12,33 +11,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class ProductTabController implements Controller {
     private ObservableList<Product> tableData = FXCollections.observableArrayList();
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private Button addButton;
-
-    @FXML
-    private Button adminButton;
-
-    @FXML
-    private Button calculatorTabButton;
-
-    @FXML
-    private Button chooseCurrentProductButton;
-
-    @FXML
-    private Button clearButton;
+    private TableView<Product> table;
 
     @FXML
     private TableColumn<?, ?> col_amount;
@@ -56,55 +35,47 @@ public class ProductTabController implements Controller {
     private TableColumn<?, ?> col_name;
 
     @FXML
-    private Button companyTabButton;
-
-    @FXML
     private TextArea currentProductArea;
-
-    @FXML
-    private Button deleteButton;
-
-    @FXML
-    private Button logoutButton;
 
     @FXML
     private TextField name_field;
 
     @FXML
-    private Button productTabButton;
+    private Button addButton;
 
     @FXML
-    private Button productionTabButton;
+    private Button chooseCurrentProductButton;
 
     @FXML
-    private Button saleTabButton;
+    private Button clearButton;
 
     @FXML
-    private TableView<Product> table;
+    private Button deleteButton;
 
     @FXML
     private Button updateButton;
 
     @FXML
     void initialize() {
-        Controller.updateUserRole();
-        if (user.getUserRole().equals(User.UserRole.USER_ROLE)) {
-            adminButton.setVisible(false);
+        if (currentProduct.getId() != 0) {
+            updateCurrentProductArea();
         }
-        if(currentProduct.getId() != 0){
-            currentProductArea.setText(currentProduct.getName());
-        }
-        if (currentCompany.getId() == 0) {
-            Service.showAlert("Вы должны выбрать текущую компанию для работы с товарами");
-            Service.changeScene(clearButton, "companyTab.fxml");
-        } else {
-            col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
-            col_name.setCellValueFactory(new PropertyValueFactory<>("name"));
-            col_amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-            col_average_cost.setCellValueFactory(new PropertyValueFactory<>("averageCost"));
-            col_average_selling_price.setCellValueFactory(new PropertyValueFactory<>("averageSellingPrice"));
 
-            loadDataFromDB();
+        col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        col_name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        col_amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        col_average_cost.setCellValueFactory(new PropertyValueFactory<>("averageCost"));
+        col_average_selling_price.setCellValueFactory(new PropertyValueFactory<>("averageSellingPrice"));
+
+        loadDataFromDB();
+    }
+
+    private void updateCurrentProductArea() {
+        currentProductArea.clear();
+        if (currentProduct.getId() == 0) {
+            currentProductArea.setText("Вы ещё не выбрали текущий продукт.");
+        } else {
+            currentProductArea.setText(currentProduct.getId() + ". \"" + currentProduct.getName() + "\"");
         }
     }
 
@@ -115,15 +86,10 @@ public class ProductTabController implements Controller {
             product.setCompanyId(currentCompany.getId());
             client.writeObject(Action.ADD_NEW_PRODUCT);
             client.writeObject(product);
-            Service.showAlert("Вы успешно добавили новую компанию. Переходите к добавлению товаров.");
 
             loadDataFromDB();
+            Service.showAlert("Вы успешно добавили новый продукт.");
         }
-    }
-
-    @FXML
-    void onClickCalculatorTabButton(ActionEvent event) {
-
     }
 
     @FXML
@@ -136,9 +102,10 @@ public class ProductTabController implements Controller {
             currentProduct.setAmount(product.getAmount());
             currentProduct.setAverageCost(product.getAverageCost());
             currentProduct.setAverageSellingPrice(product.getAverageSellingPrice());
-            currentProductArea.setText(currentProduct.getName());
+
+            updateCurrentProductArea();
         } else {
-            Service.showAlert("Для выполнения этой операции выберите компанию из таблицы.");
+            Service.showAlert("Для выполнения этой операции выберите продукт из таблицы.");
         }
     }
 
@@ -148,41 +115,19 @@ public class ProductTabController implements Controller {
     }
 
     @FXML
-    void onClickCompanyTabButton(ActionEvent event) {
-        Service.changeScene(productTabButton, "companyTab.fxml");
-    }
-
-    @FXML
     void onClickDeleteButton(ActionEvent event) {
         if (table.getSelectionModel().getSelectedItem() != null) {
             client.writeObject(Action.DELETE_PRODUCT);
             client.writeObject(table.getSelectionModel().getSelectedItem().getId());
+            loadDataFromDB();
+            if (table.getSelectionModel().getSelectedItem().getId() == currentCompany.getId()) {
+                currentProduct.setId(0);
+                currentProductArea.clear();
+            }
             Service.showAlert("Вы успешно удалили продукт.");
         } else {
             Service.showAlert("Для выполнения этой операции выберите продукт из таблицы.");
         }
-
-        loadDataFromDB();
-    }
-
-    @FXML
-    void onClickLogoutButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onClickProductTabButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onClickProductionTabButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onClickSaleTabButton(ActionEvent event) {
-
     }
 
     @FXML
@@ -193,11 +138,15 @@ public class ProductTabController implements Controller {
                 product.setId(table.getSelectionModel().getSelectedItem().getId());
                 client.writeObject(Action.UPDATE_PRODUCT);
                 client.writeObject(product);
-                Service.showAlert("Вы успешно обновили данные о продукте.");
+                if (product.getId() == currentProduct.getId()) {
+                    currentProduct.setName(product.getName());
+                    updateCurrentProductArea();
+                }
                 loadDataFromDB();
+                Service.showAlert("Вы успешно обновили данные о продукте.");
             }
         } else {
-            Service.showAlert("Для выполнения этой операции выберите компанию из таблицы, а затем отредактируйте необходимые поля.");
+            Service.showAlert("Для выполнения этой операции выберите продукт из таблицы, а затем отредактируйте необходимые поля.");
         }
     }
 
@@ -229,7 +178,7 @@ public class ProductTabController implements Controller {
         if (name_field.getText().trim().equals("")) {
             name_field.setText("Цемент");
             flag = false;
-            Service.showAlert("Наименование товара не может быть пустым. Исправьте это.");
+            Service.showAlert("Наименование продукта не может быть пустым. Исправьте это.");
         }
         return flag;
     }

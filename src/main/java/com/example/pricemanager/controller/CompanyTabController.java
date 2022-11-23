@@ -14,31 +14,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class CompanyTabController implements Controller {
     private ObservableList<Company> tableData = FXCollections.observableArrayList();
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private Button addButton;
-
-    @FXML
-    private Button adminButton;
-
-    @FXML
-    private Button chooseCurrentCompanyButton;
-
-    @FXML
-    private Button clearButton;
+    private TableView<Company> table;
 
     @FXML
     private TableColumn<?, ?> col_amount_of_products;
@@ -53,16 +36,7 @@ public class CompanyTabController implements Controller {
     private TableColumn<?, ?> col_name;
 
     @FXML
-    private Button companyTabButton;
-
-    @FXML
     private TextArea currentCompanyArea;
-
-    @FXML
-    private Button deleteButton;
-
-    @FXML
-    private Button logoutButton;
 
     @FXML
     private TextField name_field;
@@ -71,7 +45,19 @@ public class CompanyTabController implements Controller {
     private TextField balance_field;
 
     @FXML
-    private TableView<Company> table;
+    private Button addButton;
+
+    @FXML
+    private Button adminButton;
+
+    @FXML
+    private Button chooseCurrentCompanyButton;
+
+    @FXML
+    private Button clearButton;
+
+    @FXML
+    private Button deleteButton;
 
     @FXML
     private Button updateButton;
@@ -79,22 +65,10 @@ public class CompanyTabController implements Controller {
     private CompanyService companyService = new CompanyService();
 
     @FXML
-    private Button calculatorTabButton;
-
-    @FXML
-    private Button productTabButton;
-
-    @FXML
-    private Button productionTabButton;
-
-    @FXML
-    private Button saleTabButton;
-
-    @FXML
     void initialize() {
         Controller.updateUserRole();
-        if(currentCompany!=null){
-            currentCompanyArea.setText(currentCompany.getName());
+        if (currentCompany != null) {
+            updateCurrentCompanyArea();
         }
         if (user.getUserRole().equals(User.UserRole.USER_ROLE)) {
             adminButton.setVisible(false);
@@ -107,6 +81,16 @@ public class CompanyTabController implements Controller {
         loadDataFromDB();
     }
 
+    private void updateCurrentCompanyArea() {
+        currentCompanyArea.clear();
+        if (currentCompany.getId() == 0) {
+            currentCompanyArea.setText("Вы ещё не выбрали текущую компанию.");
+        } else {
+            currentCompanyArea.setText(currentCompany.getId() + ". \"" + currentCompany.getName() + "\"");
+        }
+
+    }
+
     @FXML
     void onClickAddButton(ActionEvent event) {
 
@@ -116,10 +100,9 @@ public class CompanyTabController implements Controller {
             client.writeObject(Action.ADD_NEW_COMPANY);
             client.writeObject(company);
             if (companyService.isCompanyAdded((Status) client.readObject())) {
+                loadDataFromDB();
                 Service.showAlert("Вы успешно добавили новую компанию. Переходите к добавлению товаров.");
             }
-
-            loadDataFromDB();
         }
 
     }
@@ -133,7 +116,7 @@ public class CompanyTabController implements Controller {
             currentCompany.setUserId(user.getId());
             currentCompany.setBalance(company.getBalance());
             currentCompany.setAmountOfProducts(company.getAmountOfProducts());
-            currentCompanyArea.setText(currentCompany.getName());
+            updateCurrentCompanyArea();
         } else {
             Service.showAlert("Для выполнения этой операции выберите компанию из таблицы.");
         }
@@ -150,12 +133,16 @@ public class CompanyTabController implements Controller {
         if (table.getSelectionModel().getSelectedItem() != null) {
             client.writeObject(Action.DELETE_COMPANY);
             client.writeObject(table.getSelectionModel().getSelectedItem().getId());
+            if (table.getSelectionModel().getSelectedItem().getId() == currentCompany.getId()) {
+                currentCompany.setId(0);
+                currentProduct.setId(0);
+                currentCompanyArea.clear();
+            }
+            loadDataFromDB();
             Service.showAlert("Вы успешно удалили компанию.");
         } else {
             Service.showAlert("Для выполнения этой операции выберите компанию из таблицы.");
         }
-
-        loadDataFromDB();
     }
 
     @FXML
@@ -167,9 +154,13 @@ public class CompanyTabController implements Controller {
                 client.writeObject(Action.UPDATE_COMPANY);
                 client.writeObject(company);
                 if (companyService.isCompanyAdded((Status) client.readObject())) {
+                    loadDataFromDB();
+                    if (company.getId() == currentCompany.getId()) {
+                        currentCompany.setName(company.getName());
+                        updateCurrentCompanyArea();
+                    }
                     Service.showAlert("Вы успешно обновили данные о компании.");
                 }
-                loadDataFromDB();
             }
         } else {
             Service.showAlert("Для выполнения этой операции выберите компанию из таблицы, а затем отредактируйте необходимые поля.");
@@ -214,36 +205,5 @@ public class CompanyTabController implements Controller {
             Service.showAlert("Имя компании не может быть пустым. Исправьте это.");
         }
         return flag;
-    }
-
-    @FXML
-    void onClickCalculatorTabButton(ActionEvent event) {
-
-    }
-
-
-    @FXML
-    void onClickCompanyTabButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onClickLogoutButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onClickProductTabButton(ActionEvent event) {
-        Service.changeScene(productTabButton, "productTab.fxml");
-    }
-
-    @FXML
-    void onClickProductionTabButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onClickSaleTabButton(ActionEvent event) {
-
     }
 }

@@ -51,10 +51,10 @@ public class RegistrationController implements Controller {
 
     @FXML
     void onClickCompleteRegistrationButton(ActionEvent event) {
-        if(isDataCorrectToRegistration()){
+        if (isDataCorrectToRegistration()) {
             client.writeObject(Action.REGISTRATION);
             client.writeObject(new User(loginField.getText(), passwordField.getText()));
-            if(registrationService.registrate((Status) client.readObject())){
+            if (registrationService.registrate((Status) client.readObject())) {
                 Service.showAlert("Вы были успешно зарегистрированы! Войдите в систему.");
                 Service.changeScene(completeRegistrationButton, "login.fxml");
             }

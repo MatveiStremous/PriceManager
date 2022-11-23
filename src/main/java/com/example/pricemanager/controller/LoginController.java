@@ -1,8 +1,5 @@
 package com.example.pricemanager.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.example.pricemanager.entity.User;
 import com.example.pricemanager.message.Action;
 import com.example.pricemanager.message.Status;
@@ -13,7 +10,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-public class LoginController implements Controller{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LoginController implements Controller {
 
     @FXML
     private ResourceBundle resources;
@@ -45,9 +45,9 @@ public class LoginController implements Controller{
         client.writeObject(Action.LOGIN);
         client.writeObject(new User(loginField.getText(), passwordField.getText()));
         user.setLogin(loginField.getText());
-        if(loginService.login((Status) client.readObject())){
-            user.setId((Integer)client.readObject());
-            Service.changeScene(registrationButton, "companyTab.fxml");
+        if (loginService.login((Status) client.readObject())) {
+            user.setId((Integer) client.readObject());
+            Service.changeScene(registrationButton, "mainPage.fxml");
         }
     }
 
