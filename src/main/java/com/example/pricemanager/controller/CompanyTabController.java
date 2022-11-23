@@ -79,8 +79,23 @@ public class CompanyTabController implements Controller {
     private CompanyService companyService = new CompanyService();
 
     @FXML
+    private Button calculatorTabButton;
+
+    @FXML
+    private Button productTabButton;
+
+    @FXML
+    private Button productionTabButton;
+
+    @FXML
+    private Button saleTabButton;
+
+    @FXML
     void initialize() {
         Controller.updateUserRole();
+        if(currentCompany!=null){
+            currentCompanyArea.setText(currentCompany.getName());
+        }
         if (user.getUserRole().equals(User.UserRole.USER_ROLE)) {
             adminButton.setVisible(false);
         }
@@ -128,11 +143,6 @@ public class CompanyTabController implements Controller {
     void onClickClearButton(ActionEvent event) {
         name_field.clear();
         balance_field.clear();
-    }
-
-    @FXML
-    void onClickCompanyTabButton(ActionEvent event) {
-
     }
 
     @FXML
@@ -184,11 +194,6 @@ public class CompanyTabController implements Controller {
         table.setItems(tableData);
     }
 
-    @FXML
-    void onClickLogoutButton(ActionEvent event) {
-
-    }
-
     private Company getCompanyFromInputData() {
         Company company = new Company();
         company.setName(!name_field.getText().equals("") ? name_field.getText() : "");
@@ -209,5 +214,36 @@ public class CompanyTabController implements Controller {
             Service.showAlert("Имя компании не может быть пустым. Исправьте это.");
         }
         return flag;
+    }
+
+    @FXML
+    void onClickCalculatorTabButton(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    void onClickCompanyTabButton(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onClickLogoutButton(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onClickProductTabButton(ActionEvent event) {
+        Service.changeScene(productTabButton, "productTab.fxml");
+    }
+
+    @FXML
+    void onClickProductionTabButton(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onClickSaleTabButton(ActionEvent event) {
+
     }
 }
