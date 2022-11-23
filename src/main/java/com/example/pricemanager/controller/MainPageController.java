@@ -49,7 +49,10 @@ public class MainPageController implements Controller {
 
     @FXML
     void onClickLogoutButton(ActionEvent event) {
-
+        currentCompany.setId(0);
+        currentProduct.setId(0);
+        user.setId(0);
+        Service.changeScene(logoutButton, "login.fxml");
     }
 
     @FXML
