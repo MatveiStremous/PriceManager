@@ -66,7 +66,11 @@ public class MainPageController implements Controller {
 
     @FXML
     void onClickProductionTabButton(ActionEvent event) {
-
+        if (currentProduct.getId() == 0) {
+            Service.showAlert("Вы должны выбрать текущий товар для работы с производством");
+        } else {
+            changeTab("productionTab.fxml");
+        }
     }
 
     @FXML
