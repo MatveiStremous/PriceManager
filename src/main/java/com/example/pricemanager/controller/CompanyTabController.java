@@ -151,6 +151,7 @@ public class CompanyTabController implements Controller {
             if (isInputDataCorrect()) {
                 Company company = getCompanyFromInputData();
                 company.setId(table.getSelectionModel().getSelectedItem().getId());
+                company.setUserId(user.getId());
                 client.writeObject(Action.UPDATE_COMPANY);
                 client.writeObject(company);
                 if (companyService.isCompanyAdded((Status) client.readObject())) {

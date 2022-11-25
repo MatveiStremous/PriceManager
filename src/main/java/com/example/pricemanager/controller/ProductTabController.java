@@ -136,6 +136,7 @@ public class ProductTabController implements Controller {
             if (isInputDataCorrect()) {
                 Product product = getProductFromInputData();
                 product.setId(table.getSelectionModel().getSelectedItem().getId());
+                product.setCompanyId(currentCompany.getId());
                 client.writeObject(Action.UPDATE_PRODUCT);
                 client.writeObject(product);
                 if (product.getId() == currentProduct.getId()) {

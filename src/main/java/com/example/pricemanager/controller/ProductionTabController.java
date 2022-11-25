@@ -110,6 +110,7 @@ public class ProductionTabController implements Controller {
             if (isInputDataCorrect()) {
                 Production production = getProductionFromInputData();
                 production.setId(table.getSelectionModel().getSelectedItem().getId());
+                production.setProductId(currentProduct.getId());
                 client.writeObject(Action.UPDATE_PRODUCTION);
                 client.writeObject(production);
 
