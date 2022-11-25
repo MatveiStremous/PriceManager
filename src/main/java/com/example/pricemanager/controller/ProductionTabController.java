@@ -2,6 +2,8 @@ package com.example.pricemanager.controller;
 
 import com.example.pricemanager.entity.Production;
 import com.example.pricemanager.message.Action;
+import com.example.pricemanager.message.Status;
+import com.example.pricemanager.service.ProductionService;
 import com.example.pricemanager.service.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,6 +60,8 @@ public class ProductionTabController implements Controller {
     @FXML
     private Button deleteButton;
 
+    private ProductionService productionService = new ProductionService();
+
     @FXML
     void initialize() {
         currentProductField.setText(currentProduct.getId() + ". \"" + currentProduct.getName() + "\"");
@@ -96,8 +100,10 @@ public class ProductionTabController implements Controller {
         if (table.getSelectionModel().getSelectedItem() != null) {
             client.writeObject(Action.DELETE_PRODUCTION);
             client.writeObject(table.getSelectionModel().getSelectedItem().getId());
-            loadDataFromDB();
-            Service.showAlert("Вы успешно удалили партию.");
+            if (productionService.isOperationAccepted((Status) client.readObject())) {
+                loadDataFromDB();
+                Service.showAlert("Вы успешно удалили партию.");
+            }
         } else {
             Service.showAlert("Для выполнения этой операции выберите партию из таблицы.");
         }
@@ -112,9 +118,10 @@ public class ProductionTabController implements Controller {
                 production.setProductId(currentProduct.getId());
                 client.writeObject(Action.UPDATE_PRODUCTION);
                 client.writeObject(production);
-
-                loadDataFromDB();
-                Service.showAlert("Вы успешно обновили данные о партии.");
+                if (productionService.isOperationAccepted((Status) client.readObject())) {
+                    loadDataFromDB();
+                    Service.showAlert("Вы успешно обновили данные о партии.");
+                }
             }
         } else {
             Service.showAlert("Для выполнения этой операции выберите партию из таблицы, а затем отредактируйте необходимые поля.");
@@ -150,15 +157,16 @@ public class ProductionTabController implements Controller {
 
     private boolean isInputDataCorrect() {
         boolean flag = true;
-        if (!new Scanner(amount_field.getText()).hasNextInt()) {
+        if (!new Scanner(amount_field.getText()).hasNextInt() || Integer.parseInt(amount_field.getText()) <= 0) {
             amount_field.setText("10");
             flag = false;
-            Service.showAlert("Введены некорректные данные. Используйте целое число для количества товаров в партии.");
+            Service.showAlert("Введены некорректные данные. Используйте целое число большее 0 для количества товаров в партии.");
         }
-        if (!new Scanner(total_costs_field.getText().replace(".", ",")).hasNextFloat()) {
+        if (!new Scanner(total_costs_field.getText().replace(".", ",")).hasNextFloat()
+                || Float.parseFloat(total_costs_field.getText().replace(",", ".")) <= 0) {
             total_costs_field.setText("1000.0");
             flag = false;
-            Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число для общих издержек.");
+            Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число большее 0 для общих издержек.");
         }
         if (date_field.getValue() == null) {
             date_field.setValue(LocalDate.now());

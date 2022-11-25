@@ -79,7 +79,11 @@ public class MainPageController implements Controller {
 
     @FXML
     void onClickSaleTabButton(ActionEvent event) {
-
+        if (currentProduct.getId() == 0) {
+            Service.showAlert("Вы должны выбрать текущий товар для работы с продажами");
+        } else {
+            changeTab("saleTab.fxml");
+        }
     }
 
     public void changeTab(String fxlFileName) {

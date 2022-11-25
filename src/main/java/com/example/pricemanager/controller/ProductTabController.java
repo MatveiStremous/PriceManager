@@ -58,7 +58,7 @@ public class ProductTabController implements Controller {
 
     @FXML
     void initialize() {
-        if (currentProduct.getId() != 0) {
+        if (currentProduct != null) {
             updateCurrentProductArea();
         }
 
@@ -73,7 +73,7 @@ public class ProductTabController implements Controller {
 
     private void updateCurrentProductArea() {
         if (currentProduct.getId() == 0) {
-            currentProductArea.setText("Вы ещё не выбрали текущий продукт.");
+            currentProductArea.setText("Не выбран.");
         } else {
             currentProductArea.setText(currentProduct.getId() + ". \"" + currentProduct.getName() + "\"");
         }

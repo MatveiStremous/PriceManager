@@ -44,7 +44,7 @@
                   <Font size="20.0" />
                </font>
             </Text>
-            <Button fx:id="chooseCurrentProductButton" layoutX="535.0" layoutY="34.0" mnemonicParsing="false" onAction="#onClickChooseCurrentProductButton" prefHeight="27.0" prefWidth="108.0" text="Заменить" />
+            <Button fx:id="chooseCurrentProductButton" layoutX="535.0" layoutY="34.0" mnemonicParsing="false" onAction="#onClickChooseCurrentProductButton" prefHeight="27.0" prefWidth="108.0" text="Установить" />
             <Text fx:id="currentProductArea" layoutX="225.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font size="20.0" />
