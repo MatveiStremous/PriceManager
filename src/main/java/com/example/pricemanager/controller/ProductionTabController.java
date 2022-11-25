@@ -1,6 +1,5 @@
 package com.example.pricemanager.controller;
 
-import com.example.pricemanager.entity.Product;
 import com.example.pricemanager.entity.Production;
 import com.example.pricemanager.message.Action;
 import com.example.pricemanager.service.Service;
@@ -87,9 +86,9 @@ public class ProductionTabController implements Controller {
 
     @FXML
     void onClickClearButton(ActionEvent event) {
-            date_field.setValue(null);
-            amount_field.clear();
-            total_costs_field.clear();
+        date_field.setValue(null);
+        amount_field.clear();
+        total_costs_field.clear();
     }
 
     @FXML
@@ -145,7 +144,7 @@ public class ProductionTabController implements Controller {
         Production production = new Production();
         production.setAmount(!amount_field.getText().equals("") ? Integer.parseInt(amount_field.getText()) : 1);
         production.setTotalCosts(!total_costs_field.getText().equals("") ? Float.parseFloat(total_costs_field.getText().replace(",", ".")) : 0f);
-        production.setDate(date_field != null ?  date_field.getValue() : LocalDate.now());
+        production.setDate(date_field != null ? date_field.getValue() : LocalDate.now());
         return production;
     }
 
@@ -161,7 +160,7 @@ public class ProductionTabController implements Controller {
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число для общих издержек.");
         }
-        if(date_field.getValue() == null){
+        if (date_field.getValue() == null) {
             date_field.setValue(LocalDate.now());
             flag = false;
             Service.showAlert("Вы не указали дату. Нажмите на календарь рядом с полем для выбора даты.");

@@ -1,7 +1,6 @@
 package com.example.pricemanager.controller;
 
 import com.example.pricemanager.entity.Company;
-import com.example.pricemanager.entity.User;
 import com.example.pricemanager.message.Action;
 import com.example.pricemanager.message.Status;
 import com.example.pricemanager.service.CompanyService;
@@ -10,7 +9,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -49,9 +51,6 @@ public class CompanyTabController implements Controller {
     private Button addButton;
 
     @FXML
-    private Button adminButton;
-
-    @FXML
     private Button chooseCurrentCompanyButton;
 
     @FXML
@@ -70,9 +69,6 @@ public class CompanyTabController implements Controller {
         Controller.updateUserRole();
         if (currentCompany != null) {
             updateCurrentCompanyArea();
-        }
-        if (user.getUserRole().equals(User.UserRole.USER_ROLE)) {
-            adminButton.setVisible(false);
         }
         col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         col_name.setCellValueFactory(new PropertyValueFactory<>("name"));

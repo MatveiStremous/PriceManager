@@ -1,5 +1,6 @@
 package com.example.pricemanager.controller;
 
+import com.example.pricemanager.entity.User;
 import com.example.pricemanager.service.Service;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,6 +36,9 @@ public class MainPageController implements Controller {
     @FXML
     void initialize() {
         onClickCompanyTabButton();
+        if (user.getUserRole().equals(User.UserRole.USER_ROLE)) {
+            adminTabButton.setVisible(false);
+        }
     }
 
     @FXML
