@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class ProductTabController implements Controller {
     private TableColumn<?, ?> col_name;
 
     @FXML
-    private TextArea currentProductArea;
+    private Text currentProductArea;
 
     @FXML
     private TextField name_field;
@@ -71,7 +72,6 @@ public class ProductTabController implements Controller {
     }
 
     private void updateCurrentProductArea() {
-        currentProductArea.clear();
         if (currentProduct.getId() == 0) {
             currentProductArea.setText("Вы ещё не выбрали текущий продукт.");
         } else {
@@ -122,7 +122,7 @@ public class ProductTabController implements Controller {
             loadDataFromDB();
             if (table.getSelectionModel().getSelectedItem().getId() == currentCompany.getId()) {
                 currentProduct.setId(0);
-                currentProductArea.clear();
+                updateCurrentProductArea();
             }
             Service.showAlert("Вы успешно удалили продукт.");
         } else {

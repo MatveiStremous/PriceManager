@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 import java.util.List;
 import java.util.Scanner;
@@ -36,7 +37,7 @@ public class CompanyTabController implements Controller {
     private TableColumn<?, ?> col_name;
 
     @FXML
-    private TextArea currentCompanyArea;
+    private Text currentCompanyArea;
 
     @FXML
     private TextField name_field;
@@ -82,9 +83,8 @@ public class CompanyTabController implements Controller {
     }
 
     private void updateCurrentCompanyArea() {
-        currentCompanyArea.clear();
         if (currentCompany.getId() == 0) {
-            currentCompanyArea.setText("Вы ещё не выбрали текущую компанию.");
+            currentCompanyArea.setText("Не выбрана.");
         } else {
             currentCompanyArea.setText(currentCompany.getId() + ". \"" + currentCompany.getName() + "\"");
         }
@@ -136,7 +136,7 @@ public class CompanyTabController implements Controller {
             if (table.getSelectionModel().getSelectedItem().getId() == currentCompany.getId()) {
                 currentCompany.setId(0);
                 currentProduct.setId(0);
-                currentCompanyArea.clear();
+                updateCurrentCompanyArea();
             }
             loadDataFromDB();
             Service.showAlert("Вы успешно удалили компанию.");
