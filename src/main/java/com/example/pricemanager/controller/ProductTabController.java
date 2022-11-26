@@ -119,11 +119,11 @@ public class ProductTabController implements Controller {
         if (table.getSelectionModel().getSelectedItem() != null) {
             client.writeObject(Action.DELETE_PRODUCT);
             client.writeObject(table.getSelectionModel().getSelectedItem().getId());
-            loadDataFromDB();
             if (table.getSelectionModel().getSelectedItem().getId() == currentCompany.getId()) {
                 currentProduct.setId(0);
                 updateCurrentProductArea();
             }
+            loadDataFromDB();
             Service.showAlert("Вы успешно удалили продукт.");
         } else {
             Service.showAlert("Для выполнения этой операции выберите продукт из таблицы.");

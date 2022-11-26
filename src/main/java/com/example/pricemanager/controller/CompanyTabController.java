@@ -113,6 +113,7 @@ public class CompanyTabController implements Controller {
             currentCompany.setBalance(company.getBalance());
             currentCompany.setAmountOfProducts(company.getAmountOfProducts());
             updateCurrentCompanyArea();
+            currentProduct.setId(0);
         } else {
             Service.showAlert("Для выполнения этой операции выберите компанию из таблицы.");
         }
