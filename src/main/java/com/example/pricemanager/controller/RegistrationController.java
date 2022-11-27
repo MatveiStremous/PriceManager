@@ -62,8 +62,8 @@ public class RegistrationController implements Controller {
     }
 
     private boolean isDataCorrectToRegistration() {
-        if (!loginField.getText().matches("[a-zA-Z\\d]{3,}")) {
-            Service.showAlert("Логин должен состоять как минимум из 3 символов.\n" +
+        if (!loginField.getText().matches("[a-zA-Z\\d]{3,40}")) {
+            Service.showAlert("Логин должен быть не короче 3 символов, но и не более 40.\n" +
                     "Можно использовать только английские буквы (a-z и A-Z) и цифры (0-9).");
             return false;
         }
