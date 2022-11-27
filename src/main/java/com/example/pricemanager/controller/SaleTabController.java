@@ -148,7 +148,7 @@ public class SaleTabController implements Controller {
     private Sale getSaleFromInputData() {
         Sale sale = new Sale();
         sale.setAmount(!amount_field.getText().equals("") ? Integer.parseInt(amount_field.getText()) : 1);
-        sale.setTotalPrice(!total_price_field.getText().equals("") ? Float.parseFloat(total_price_field.getText().replace(",", ".")) : 0f);
+        sale.setTotalPrice(!total_price_field.getText().equals("") ? Double.parseDouble(total_price_field.getText().replace(",", ".")) : 0f);
         sale.setDate(date_field != null ? date_field.getValue() : LocalDate.now());
         return sale;
     }
@@ -160,8 +160,8 @@ public class SaleTabController implements Controller {
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте целое число большее 0 для количества товаров в продаже.");
         }
-        if (!new Scanner(total_price_field.getText().replace(".", ",")).hasNextFloat()
-                || Float.parseFloat(total_price_field.getText().replace(",", ".")) <= 0) {
+        if (!new Scanner(total_price_field.getText().replace(".", ",")).hasNextDouble()
+                || Double.parseDouble(total_price_field.getText().replace(",", ".")) <= 0) {
             total_price_field.setText("1000.0");
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число большее 0 для общей выручки.");

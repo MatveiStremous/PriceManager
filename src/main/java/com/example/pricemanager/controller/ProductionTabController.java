@@ -150,7 +150,7 @@ public class ProductionTabController implements Controller {
     private Production getProductionFromInputData() {
         Production production = new Production();
         production.setAmount(!amount_field.getText().equals("") ? Integer.parseInt(amount_field.getText()) : 1);
-        production.setTotalCosts(!total_costs_field.getText().equals("") ? Float.parseFloat(total_costs_field.getText().replace(",", ".")) : 0f);
+        production.setTotalCosts(!total_costs_field.getText().equals("") ? Double.parseDouble(total_costs_field.getText().replace(",", ".")) : 0f);
         production.setDate(date_field != null ? date_field.getValue() : LocalDate.now());
         return production;
     }
@@ -162,8 +162,8 @@ public class ProductionTabController implements Controller {
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте целое число большее 0 для количества товаров в партии.");
         }
-        if (!new Scanner(total_costs_field.getText().replace(".", ",")).hasNextFloat()
-                || Float.parseFloat(total_costs_field.getText().replace(",", ".")) <= 0) {
+        if (!new Scanner(total_costs_field.getText().replace(".", ",")).hasNextDouble()
+                || Double.parseDouble(total_costs_field.getText().replace(",", ".")) <= 0) {
             total_costs_field.setText("1000.0");
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число большее 0 для общих издержек.");

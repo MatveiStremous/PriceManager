@@ -186,13 +186,13 @@ public class CompanyTabController implements Controller {
     private Company getCompanyFromInputData() {
         Company company = new Company();
         company.setName(!name_field.getText().equals("") ? name_field.getText() : "");
-        company.setBalance(!balance_field.getText().equals("") ? Float.parseFloat(balance_field.getText().replace(",", ".")) : 0f);
+        company.setBalance(!balance_field.getText().equals("") ? Double.parseDouble(balance_field.getText().replace(",", ".")) : 0f);
         return company;
     }
 
     private boolean isInputDataCorrect() {
         boolean flag = true;
-        if (!new Scanner(balance_field.getText().replace(".", ",")).hasNextFloat()) {
+        if (!new Scanner(balance_field.getText().replace(".", ",")).hasNextDouble()) {
             balance_field.setText("1000.0");
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число для баланса.");
