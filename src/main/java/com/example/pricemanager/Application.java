@@ -16,7 +16,7 @@ public class Application extends javafx.application.Application {
         stage.setOnCloseRequest(Controller.closeEventHandler);
         stage.setTitle("PriceManager");
         stage.setScene(scene);
-
+        stage.setResizable(false);
         stage.show();
     }
 

@@ -43,7 +43,7 @@ public class MainPageController implements Controller {
 
     @FXML
     void onClickCalculatorTabButton(ActionEvent event) {
-
+        changeTab("calculatorTab.fxml");
     }
 
     @FXML
