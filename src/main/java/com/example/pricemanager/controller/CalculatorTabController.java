@@ -23,7 +23,7 @@ public class CalculatorTabController implements Controller {
 
     @FXML
     void onClickCostCalcButton() {
-        changeTab("priceCalculator.fxml");
+        changeTab("costCalculator.fxml");
     }
 
     @FXML
@@ -33,7 +33,7 @@ public class CalculatorTabController implements Controller {
 
     @FXML
     void onClickCostsCalcHistoryButton() {
-
+        changeTab("costCalculatorHistory.fxml");
     }
 
     @FXML
