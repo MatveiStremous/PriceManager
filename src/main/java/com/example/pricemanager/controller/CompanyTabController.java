@@ -66,7 +66,6 @@ public class CompanyTabController implements Controller {
 
     @FXML
     void initialize() {
-        Controller.updateUserRole();
         if (currentCompany != null) {
             updateCurrentCompanyArea();
         }

@@ -13,6 +13,10 @@ public class LoginService {
                 Service.showAlert("Неверно введён логин или пароль. Попробуйте снова!");
                 break;
             }
+            case USER_BANNED: {
+                Service.showAlert("Ваша учётная запись была заблокирована администратором.");
+                break;
+            }
         }
         return false;
     }

@@ -21,9 +21,13 @@ public interface Controller {
         System.exit(0);
     };
 
-    static void updateUserRole() {
-        client.writeObject(Action.CHECK_ROLE);
+    static void updateUserInfo() {
+        client.writeObject(Action.GET_USER_INFO);
         client.writeObject(user.getLogin());
-        user.setUserRole((User.UserRole) client.readObject());
+        User userInfo = ((User) client.readObject());
+        user.setId(userInfo.getId());
+        user.setLogin(userInfo.getLogin());
+        user.setUserStatus(userInfo.getUserStatus());
+        user.setUserRole(userInfo.getUserRole());
     }
 }

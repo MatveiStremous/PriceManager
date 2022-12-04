@@ -46,7 +46,7 @@ public class LoginController implements Controller {
         client.writeObject(new User(loginField.getText(), passwordField.getText()));
         user.setLogin(loginField.getText());
         if (loginService.login((Status) client.readObject())) {
-            user.setId((Integer) client.readObject());
+            Controller.updateUserInfo();
             Service.changeScene(registrationButton, "mainPage.fxml");
         }
     }
