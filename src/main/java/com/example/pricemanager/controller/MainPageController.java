@@ -34,6 +34,12 @@ public class MainPageController implements Controller {
     private Button saleTabButton;
 
     @FXML
+    private Button personalTabButton;
+
+    @FXML
+    private Button statisticTabButton;
+
+    @FXML
     void initialize() {
         onClickCompanyTabButton();
         if (user.getUserRole().equals(User.UserRole.USER_ROLE)) {
@@ -84,6 +90,21 @@ public class MainPageController implements Controller {
         } else {
             changeTab("saleTab.fxml");
         }
+    }
+
+    @FXML
+    void onClickAdminTabButton(ActionEvent event) {
+        changeTab("adminTab.fxml");
+    }
+
+    @FXML
+    void onClickPersonalTabButton(ActionEvent event) {
+        changeTab("personalTab.fxml");
+    }
+
+    @FXML
+    void onClickStatisticTabButton(ActionEvent event) {
+
     }
 
     public void changeTab(String fxlFileName) {

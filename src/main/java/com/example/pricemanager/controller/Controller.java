@@ -1,6 +1,7 @@
 package com.example.pricemanager.controller;
 
 import com.example.pricemanager.connection.Client;
+import com.example.pricemanager.dto.UserDto;
 import com.example.pricemanager.entity.Company;
 import com.example.pricemanager.entity.Product;
 import com.example.pricemanager.entity.User;
@@ -24,7 +25,7 @@ public interface Controller {
     static void updateUserInfo() {
         client.writeObject(Action.GET_USER_INFO);
         client.writeObject(user.getLogin());
-        User userInfo = ((User) client.readObject());
+        UserDto userInfo = ((UserDto) client.readObject());
         user.setId(userInfo.getId());
         user.setLogin(userInfo.getLogin());
         user.setUserStatus(userInfo.getUserStatus());
