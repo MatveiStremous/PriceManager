@@ -104,7 +104,11 @@ public class MainPageController implements Controller {
 
     @FXML
     void onClickStatisticTabButton(ActionEvent event) {
-
+        if (currentProduct.getId() == 0) {
+            Service.showAlert("Вы должны выбрать текущий товар просмотра графиков");
+        } else {
+            changeTab("statisticTab.fxml");
+        }
     }
 
     public void changeTab(String fxlFileName) {

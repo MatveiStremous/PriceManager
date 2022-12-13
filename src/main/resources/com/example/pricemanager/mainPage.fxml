@@ -17,7 +17,7 @@
             <Button fx:id="calculatorTabButton" layoutX="35.0" layoutY="240.0" mnemonicParsing="false" onAction="#onClickCalculatorTabButton" prefHeight="25.0" prefWidth="130.0" text="Калькулятор" />
             <Line endX="-89.0" endY="412.0" layoutX="289.0" layoutY="188.0" startX="-89.0" startY="-188.0" />
             <Button fx:id="personalTabButton" layoutX="35.0" layoutY="485.0" mnemonicParsing="false" onAction="#onClickPersonalTabButton" prefHeight="25.0" prefWidth="130.0" text="Личный кабинет" />
-            <Button fx:id="statisticTabButton" layoutX="35.0" layoutY="290.0" mnemonicParsing="false" onAction="#onClickStatisticTabButton" prefHeight="25.0" prefWidth="130.0" text="Статистика" />
+            <Button fx:id="statisticTabButton" layoutX="35.0" layoutY="290.0" mnemonicParsing="false" onAction="#onClickStatisticTabButton" prefHeight="25.0" prefWidth="130.0" text="Графики изменений" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="wrapper" layoutX="200.0" prefHeight="600.0" prefWidth="700.0" />
