@@ -6,6 +6,7 @@ import com.example.pricemanager.service.Service;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.util.Scanner;
@@ -32,10 +33,17 @@ public class CostCalculatorController implements Controller {
     @FXML
     private TextField salaryField;
 
+    @FXML
+    private AnchorPane reportPane;
 
     @FXML
     void initialize() {
 
+    }
+
+    @FXML
+    void onClickSaveButton() {
+        Service.printToPDF(reportPane);
     }
 
     @FXML
@@ -65,26 +73,46 @@ public class CostCalculatorController implements Controller {
             materialsField.setText("1000.0");
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число для этого поля.");
+        } else if (Double.parseDouble(materialsField.getText())<0) {
+            materialsField.setText("1000.0");
+            flag = false;
+            Service.showAlert("Введены некорректные данные. Нельзя использовать отрицательные значения.");
         }
         if (!new Scanner(productionField.getText().replace(".", ",")).hasNextDouble()) {
             productionField.setText("1000.0");
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число для этого поля.");
+        }else if (Double.parseDouble(productionField.getText())<0) {
+            productionField.setText("1000.0");
+            flag = false;
+            Service.showAlert("Введены некорректные данные. Нельзя использовать отрицательные значения.");
         }
         if (!new Scanner(deprecationField.getText().replace(".", ",")).hasNextDouble()) {
             deprecationField.setText("1000.0");
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число для этого поля.");
+        }else if (Double.parseDouble(deprecationField.getText())<0) {
+            deprecationField.setText("1000.0");
+            flag = false;
+            Service.showAlert("Введены некорректные данные. Нельзя использовать отрицательные значения.");
         }
         if (!new Scanner(salaryField.getText().replace(".", ",")).hasNextDouble()) {
             salaryField.setText("1000.0");
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число для этого поля.");
+        }else if (Double.parseDouble(salaryField.getText())<0) {
+            salaryField.setText("1000.0");
+            flag = false;
+            Service.showAlert("Введены некорректные данные. Нельзя использовать отрицательные значения.");
         }
         if (!new Scanner(othersField.getText().replace(".", ",")).hasNextDouble()) {
             othersField.setText("1000.0");
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число для этого поля.");
+        }else if (Double.parseDouble(othersField.getText())<0) {
+            othersField.setText("1000.0");
+            flag = false;
+            Service.showAlert("Введены некорректные данные. Нельзя использовать отрицательные значения.");
         }
         return flag;
     }

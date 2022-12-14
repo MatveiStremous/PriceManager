@@ -14,11 +14,11 @@
          <children>
             <TableView fx:id="table" layoutX="55.0" layoutY="132.0" onMouseClicked="#onSelectOneRecord" prefHeight="359.0" prefWidth="590.0">
                <columns>
-                  <TableColumn fx:id="col_id" prefWidth="59.0" text="Ид" />
-                  <TableColumn fx:id="col_name" prefWidth="128.5" text="Наименование" />
-                  <TableColumn fx:id="col_amount" prefWidth="111.5" text="Количество" />
-                  <TableColumn fx:id="col_average_cost" prefWidth="149.0" text="Средние издержки" />
-                  <TableColumn fx:id="col_average_selling_price" prefWidth="141.0" text="Средняя цена" />
+                  <TableColumn fx:id="col_id" prefWidth="47.5" text="Ид" />
+                  <TableColumn fx:id="col_name" prefWidth="189.5" text="Наименование" />
+                  <TableColumn fx:id="col_amount" prefWidth="95.0" text="Количество" />
+                  <TableColumn fx:id="col_average_cost" prefWidth="141.0" text="Средние издержки" />
+                  <TableColumn fx:id="col_average_selling_price" prefWidth="116.0" text="Средняя цена" />
                </columns>
             </TableView>
             <AnchorPane layoutY="-7.0" prefHeight="59.0" prefWidth="700.0">

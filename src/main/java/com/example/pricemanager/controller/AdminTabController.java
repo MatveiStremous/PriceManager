@@ -1,6 +1,7 @@
 package com.example.pricemanager.controller;
 
 import com.example.pricemanager.dto.UserDto;
+import com.example.pricemanager.entity.Product;
 import com.example.pricemanager.entity.User;
 import com.example.pricemanager.message.Action;
 import com.example.pricemanager.message.Status;
@@ -8,11 +9,14 @@ import com.example.pricemanager.service.AdminService;
 import com.example.pricemanager.service.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -39,6 +43,9 @@ public class AdminTabController implements Controller {
 
     @FXML
     private Button doBannedButton;
+
+    @FXML
+    private TextField search_field;
 
     @FXML
     private TableView<UserDto> table;
@@ -91,12 +98,33 @@ public class AdminTabController implements Controller {
         }
     }
 
+    @FXML
+    void onClickSaveButton() {
+        Service.printToPDF(table);
+    }
+
     private void loadDataFromDB() {
         tableData.clear();
         client.writeObject(Action.GET_ALL_USERS);
         List<UserDto> tempList = (List<UserDto>) client.readObject();
         tableData = FXCollections.observableArrayList(tempList);
         table.setItems(tableData);
+        routesSearch();
+    }
+
+    private void routesSearch() {
+        FilteredList<UserDto> filteredList = new FilteredList<>(tableData, b -> true);
+        search_field.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(userDto -> {
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+            String lowerCaseFilter = newValue.toLowerCase();
+            return String.valueOf(userDto.getId()).contains(lowerCaseFilter) ||
+                    userDto.getLogin().toLowerCase().contains(lowerCaseFilter);
+        }));
+        SortedList<UserDto> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedList);
     }
 
     private void updateUser(UserDto user) {

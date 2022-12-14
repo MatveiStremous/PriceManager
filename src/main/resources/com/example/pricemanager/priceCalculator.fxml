@@ -7,39 +7,46 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pricemanager.controller.PriceCalculatorController">
-   <children>
-      <TextField fx:id="averageCostField" layoutX="80.0" layoutY="90.0" prefHeight="25.0" prefWidth="149.0" />
-      <TextField fx:id="increasePercField" layoutX="80.0" layoutY="152.0" />
-      <TextField fx:id="taxPercField" layoutX="80.0" layoutY="216.0" />
-      <Text layoutX="80.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Процент надбавки:">
-         <font>
-            <Font name="Times New Roman" size="18.0" />
-         </font>
-      </Text>
-      <Text layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Средние издержки единицы продукции:">
-         <font>
-            <Font name="Times New Roman" size="18.0" />
-         </font>
-      </Text>
-      <Text layoutX="82.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Общий процент налогов:">
-         <font>
-            <Font name="Times New Roman" size="18.0" />
-         </font>
-      </Text>
-      <Button fx:id="calculateButton" layoutX="82.0" layoutY="351.0" mnemonicParsing="false" onAction="#onClickCalculateButton" prefHeight="45.0" prefWidth="146.0" text="Расчитать">
+    <children>
+        <AnchorPane fx:id="reportPane" layoutX="84.0" layoutY="50.0" prefHeight="272.0" prefWidth="463.0">
+            <TextField fx:id="averageCostField" layoutX="24.0" layoutY="55.0" prefHeight="25.0" prefWidth="149.0" />
+            <TextField fx:id="increasePercField" layoutX="25.0" layoutY="122.0" />
+            <TextField fx:id="taxPercField" layoutX="25.0" layoutY="182.0" />
+            <Text layoutX="25.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Процент надбавки:">
+                <font>
+                    <Font name="Times New Roman" size="18.0" />
+                </font>
+            </Text>
+            <Text layoutX="24.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Средние издержки единицы продукции:">
+                <font>
+                    <Font name="Times New Roman" size="18.0" />
+                </font>
+            </Text>
+            <Text layoutX="25.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Общий процент налогов:">
+                <font>
+                    <Font name="Times New Roman" size="18.0" />
+                </font>
+            </Text>
+            <Text layoutX="27.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Итоговая цена:">
+                <font>
+                    <Font name="Times New Roman" size="22.0" />
+                </font>
+            </Text>
+            <Text fx:id="resultField" layoutX="178.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                <font>
+                    <Font name="Times New Roman" size="22.0" />
+                </font>
+            </Text>
+        </AnchorPane>
+         <Button fx:id="calculateButton" layoutX="106.0" layoutY="374.0" mnemonicParsing="false" onAction="#onClickCalculateButton" prefHeight="45.0" prefWidth="146.0" text="Расчитать">
+             <font>
+                 <Font name="Times New Roman" size="18.0" />
+             </font>
+         </Button>
+      <Button layoutX="354.0" layoutY="374.0" mnemonicParsing="false" onAction="#onClickSaveButton" prefHeight="45.0" prefWidth="193.0" text="Сохранить отчёт">
          <font>
             <Font name="Times New Roman" size="18.0" />
          </font>
       </Button>
-      <Text layoutX="275.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Итоговая цена:">
-         <font>
-            <Font name="Times New Roman" size="22.0" />
-         </font>
-      </Text>
-      <Text fx:id="resultField" layoutX="435.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0">
-         <font>
-            <Font name="Times New Roman" size="22.0" />
-         </font>
-      </Text>
-   </children>
+    </children>
 </AnchorPane>

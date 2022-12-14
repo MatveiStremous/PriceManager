@@ -8,12 +8,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pricemanager.controller.PersonalTabController">
    <children>
-      <Text layoutX="217.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Здравствуйте, ">
+      <Text layoutX="283.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Смена пароля ">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Text fx:id="loginArea" layoutX="350.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="loginArea" layoutX="34.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="20.0" />
          </font>

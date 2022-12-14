@@ -41,9 +41,18 @@ public class MainPageController implements Controller {
 
     @FXML
     void initialize() {
-        onClickCompanyTabButton();
+
         if (user.getUserRole().equals(User.UserRole.USER_ROLE)) {
             adminTabButton.setVisible(false);
+            onClickCompanyTabButton();
+        }else {
+            companyTabButton.setVisible(false);
+            productTabButton.setVisible(false);
+            productionTabButton.setVisible(false);
+            saleTabButton.setVisible(false);
+            statisticTabButton.setVisible(false);
+            calculatorTabButton.setVisible(false);
+            onClickAdminTabButton();
         }
     }
 
@@ -58,7 +67,7 @@ public class MainPageController implements Controller {
     }
 
     @FXML
-    void onClickLogoutButton(ActionEvent event) {
+    void onClickLogoutButton() {
         currentCompany.setId(0);
         currentProduct.setId(0);
         user.setId(0);
@@ -66,7 +75,7 @@ public class MainPageController implements Controller {
     }
 
     @FXML
-    void onClickProductTabButton(ActionEvent event) {
+    void onClickProductTabButton() {
         if (currentCompany.getId() == 0) {
             Service.showAlert("Вы должны выбрать текущую компанию для работы с товарами");
         } else {
@@ -75,7 +84,7 @@ public class MainPageController implements Controller {
     }
 
     @FXML
-    void onClickProductionTabButton(ActionEvent event) {
+    void onClickProductionTabButton() {
         if (currentProduct.getId() == 0) {
             Service.showAlert("Вы должны выбрать текущий товар для работы с производством");
         } else {
@@ -84,7 +93,7 @@ public class MainPageController implements Controller {
     }
 
     @FXML
-    void onClickSaleTabButton(ActionEvent event) {
+    void onClickSaleTabButton() {
         if (currentProduct.getId() == 0) {
             Service.showAlert("Вы должны выбрать текущий товар для работы с продажами");
         } else {
@@ -93,17 +102,17 @@ public class MainPageController implements Controller {
     }
 
     @FXML
-    void onClickAdminTabButton(ActionEvent event) {
+    void onClickAdminTabButton() {
         changeTab("adminTab.fxml");
     }
 
     @FXML
-    void onClickPersonalTabButton(ActionEvent event) {
+    void onClickPersonalTabButton() {
         changeTab("personalTab.fxml");
     }
 
     @FXML
-    void onClickStatisticTabButton(ActionEvent event) {
+    void onClickStatisticTabButton() {
         if (currentProduct.getId() == 0) {
             Service.showAlert("Вы должны выбрать текущий товар просмотра графиков");
         } else {

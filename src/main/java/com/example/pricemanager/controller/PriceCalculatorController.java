@@ -6,6 +6,7 @@ import com.example.pricemanager.service.Service;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.util.Scanner;
@@ -27,8 +28,16 @@ public class PriceCalculatorController implements Controller {
     private TextField taxPercField;
 
     @FXML
+    private AnchorPane reportPane;
+
+    @FXML
     void initialize() {
 
+    }
+
+    @FXML
+    void onClickSaveButton() {
+        Service.printToPDF(reportPane);
     }
 
     @FXML
@@ -56,16 +65,28 @@ public class PriceCalculatorController implements Controller {
             averageCostField.setText("1000.0");
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число для этого поля.");
+        }else if (Double.parseDouble(averageCostField.getText())<0) {
+            averageCostField.setText("1000.0");
+            flag = false;
+            Service.showAlert("Введены некорректные данные. Нельзя использовать отрицательные значения.");
         }
         if (!new Scanner(taxPercField.getText().replace(".", ",")).hasNextDouble()) {
             taxPercField.setText("1000.0");
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число для этого поля.");
+        }else if (Double.parseDouble(taxPercField.getText())<0 ||Double.parseDouble(taxPercField.getText())>100) {
+            taxPercField.setText("1000.0");
+            flag = false;
+            Service.showAlert("Введены некорректные данные. Используйте значение от 0 до 100.");
         }
         if (!new Scanner(increasePercField.getText().replace(".", ",")).hasNextDouble()) {
             increasePercField.setText("1000.0");
             flag = false;
             Service.showAlert("Введены некорректные данные. Используйте вещественное (либо целое) число для этого поля.");
+        }else if (Double.parseDouble(increasePercField.getText())<0) {
+            increasePercField.setText("1000.0");
+            flag = false;
+            Service.showAlert("Введены некорректные данные. Нельзя использовать отрицательные значения.");
         }
         return flag;
     }
