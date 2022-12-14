@@ -11,9 +11,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pricemanager.controller.ProductionTabController">
    <children>
-      <AnchorPane layoutY="94.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0">
+      <AnchorPane layoutY="79.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="700.0">
          <children>
-            <TableView fx:id="table" layoutX="55.0" layoutY="184.0" onMouseClicked="#onSelectOneRecord" prefHeight="302.0" prefWidth="590.0">
+            <TableView fx:id="table" layoutX="55.0" layoutY="199.0" onMouseClicked="#onSelectOneRecord" prefHeight="302.0" prefWidth="590.0">
                <columns>
                   <TableColumn fx:id="col_id" text="Ид" />
                   <TableColumn fx:id="col_amount" prefWidth="149.0" text="Количество" />
@@ -32,13 +32,15 @@
                   <DatePicker fx:id="date_field" editable="false" layoutX="359.0" layoutY="18.0" prefHeight="25.0" prefWidth="146.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutY="97.0" prefHeight="59.0" prefWidth="700.0">
+            <AnchorPane layoutY="73.0" prefHeight="59.0" prefWidth="700.0">
                <children>
                   <Button fx:id="addButton" layoutX="56.0" layoutY="17.0" mnemonicParsing="false" onAction="#onClickAddButton" prefHeight="25.0" prefWidth="131.0" text="Добавить партию" />
                   <Button fx:id="deleteButton" layoutX="277.0" layoutY="17.0" mnemonicParsing="false" onAction="#onClickDeleteButton" prefHeight="25.0" prefWidth="146.0" text="Удалить партию" />
                   <Button fx:id="updateButton" layoutX="487.0" layoutY="17.0" mnemonicParsing="false" onAction="#onClickUpdateButton" prefHeight="25.0" prefWidth="156.0" text="Обновить партию" />
                </children>
             </AnchorPane>
+            <TextField fx:id="search_field" layoutX="55.0" layoutY="146.0" prefHeight="25.0" prefWidth="404.0" promptText="Поиск по товарам" />
+            <Button fx:id="saveButton" layoutX="489.0" layoutY="146.0" mnemonicParsing="false" onAction="#onClickSaveButton" prefHeight="25.0" prefWidth="156.0" text="Сохранить таблицу" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="94.0" prefWidth="700.0">

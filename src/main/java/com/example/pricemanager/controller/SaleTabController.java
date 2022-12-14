@@ -7,6 +7,8 @@ import com.example.pricemanager.service.SaleService;
 import com.example.pricemanager.service.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -60,6 +62,12 @@ public class SaleTabController implements Controller {
     @FXML
     private Button deleteButton;
 
+    @FXML
+    private Button saveButton;
+
+    @FXML
+    private TextField search_field;
+
     private SaleService saleService = new SaleService();
 
     @FXML
@@ -81,7 +89,7 @@ public class SaleTabController implements Controller {
             sale.setProductId(currentProduct.getId());
             client.writeObject(Action.ADD_NEW_SALE);
             client.writeObject(sale);
-            if(saleService.isOperationAccepted((Status) client.readObject())) {
+            if (saleService.isOperationAccepted((Status) client.readObject())) {
                 loadDataFromDB();
                 Service.showAlert("Вы успешно добавили новую продажу.");
             }
@@ -93,6 +101,11 @@ public class SaleTabController implements Controller {
         date_field.setValue(null);
         amount_field.clear();
         total_price_field.clear();
+    }
+
+    @FXML
+    void onClickSaveButton() {
+        Service.printToPDF(table);
     }
 
     @FXML
@@ -116,7 +129,7 @@ public class SaleTabController implements Controller {
                 sale.setProductId(currentProduct.getId());
                 client.writeObject(Action.UPDATE_SALE);
                 client.writeObject(sale);
-                if(saleService.isOperationAccepted((Status) client.readObject())) {
+                if (saleService.isOperationAccepted((Status) client.readObject())) {
                     loadDataFromDB();
                     Service.showAlert("Вы успешно обновили данные по продаже.");
                 }
@@ -143,6 +156,22 @@ public class SaleTabController implements Controller {
         List<Sale> tempList = (List<Sale>) client.readObject();
         tableData = FXCollections.observableArrayList(tempList);
         table.setItems(tableData);
+        routesSearch();
+    }
+
+    private void routesSearch() {
+        FilteredList<Sale> filteredList = new FilteredList<>(tableData, b -> true);
+        search_field.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(sale -> {
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+            String lowerCaseFilter = newValue.toLowerCase();
+            return String.valueOf(sale.getId()).contains(lowerCaseFilter) ||
+                    sale.getDate().toString().toLowerCase().contains(lowerCaseFilter);
+        }));
+        SortedList<Sale> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedList);
     }
 
     private Sale getSaleFromInputData() {

@@ -1,12 +1,15 @@
 package com.example.pricemanager.controller;
 
 import com.example.pricemanager.entity.Production;
+import com.example.pricemanager.entity.Sale;
 import com.example.pricemanager.message.Action;
 import com.example.pricemanager.message.Status;
 import com.example.pricemanager.service.ProductionService;
 import com.example.pricemanager.service.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -60,6 +63,12 @@ public class ProductionTabController implements Controller {
     @FXML
     private Button deleteButton;
 
+    @FXML
+    private Button saveButton;
+
+    @FXML
+    private TextField search_field;
+
     private ProductionService productionService = new ProductionService();
 
     @FXML
@@ -93,6 +102,11 @@ public class ProductionTabController implements Controller {
         date_field.setValue(null);
         amount_field.clear();
         total_costs_field.clear();
+    }
+
+    @FXML
+    void onClickSaveButton() {
+        Service.printToPDF(table);
     }
 
     @FXML
@@ -145,6 +159,22 @@ public class ProductionTabController implements Controller {
         List<Production> tempList = (List<Production>) client.readObject();
         tableData = FXCollections.observableArrayList(tempList);
         table.setItems(tableData);
+        routesSearch();
+    }
+
+    private void routesSearch() {
+        FilteredList<Production> filteredList = new FilteredList<>(tableData, b -> true);
+        search_field.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(production -> {
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+            String lowerCaseFilter = newValue.toLowerCase();
+            return String.valueOf(production.getId()).contains(lowerCaseFilter) ||
+                    production.getDate().toString().toLowerCase().contains(lowerCaseFilter);
+        }));
+        SortedList<Production> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedList);
     }
 
     private Production getProductionFromInputData() {

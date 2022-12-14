@@ -21,20 +21,22 @@
                   <TableColumn fx:id="col_average_selling_price" prefWidth="141.0" text="Средняя цена" />
                </columns>
             </TableView>
-            <AnchorPane layoutY="14.0" prefHeight="59.0" prefWidth="700.0">
+            <AnchorPane layoutY="-7.0" prefHeight="59.0" prefWidth="700.0">
                <children>
                   <TextField fx:id="name_field" layoutX="57.0" layoutY="22.0" prefHeight="25.0" prefWidth="200.0" />
                   <Text layoutX="57.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Наименование" wrappingWidth="107.63671875" />
                   <Button fx:id="clearButton" layoutX="549.0" layoutY="22.0" mnemonicParsing="false" onAction="#onClickClearButton" prefHeight="25.0" prefWidth="93.0" text="Очистить" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutY="73.0" prefHeight="59.0" prefWidth="700.0">
+            <AnchorPane layoutY="37.0" prefHeight="59.0" prefWidth="700.0">
                <children>
                   <Button fx:id="addButton" layoutX="56.0" layoutY="17.0" mnemonicParsing="false" onAction="#onClickAddButton" prefHeight="25.0" prefWidth="131.0" text="Добавить продукт" />
                   <Button fx:id="deleteButton" layoutX="277.0" layoutY="17.0" mnemonicParsing="false" onAction="#onClickDeleteButton" prefHeight="25.0" prefWidth="146.0" text="Удалить продукт" />
                   <Button fx:id="updateButton" layoutX="487.0" layoutY="17.0" mnemonicParsing="false" onAction="#onClickUpdateButton" prefHeight="25.0" prefWidth="156.0" text="Обновить наименование" />
                </children>
             </AnchorPane>
+            <TextField fx:id="search_field" layoutX="55.0" layoutY="96.0" prefHeight="25.0" prefWidth="404.0" promptText="Поиск по товарам" />
+            <Button fx:id="saveButton" layoutX="489.0" layoutY="96.0" mnemonicParsing="false" onAction="#onClickSaveButton" prefHeight="25.0" prefWidth="156.0" text="Сохранить таблицу" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="75.0" prefWidth="700.0">

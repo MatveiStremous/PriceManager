@@ -7,8 +7,11 @@ import com.example.pricemanager.service.CompanyService;
 import com.example.pricemanager.service.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -61,6 +64,9 @@ public class CompanyTabController implements Controller {
 
     @FXML
     private Button updateButton;
+
+    @FXML
+    private TextField search_field;
 
     private CompanyService companyService = new CompanyService();
 
@@ -125,6 +131,10 @@ public class CompanyTabController implements Controller {
     }
 
     @FXML
+    void onClickSaveButton() {
+        Service.printToPDF(table);
+    }
+    @FXML
     void onClickDeleteButton(ActionEvent event) {
         if (table.getSelectionModel().getSelectedItem() != null) {
             client.writeObject(Action.DELETE_COMPANY);
@@ -180,6 +190,23 @@ public class CompanyTabController implements Controller {
         List<Company> tempList = (List<Company>) client.readObject();
         tableData = FXCollections.observableArrayList(tempList);
         table.setItems(tableData);
+        routesSearch();
+    }
+
+    private void routesSearch() {
+        FilteredList<Company> filteredList = new FilteredList<>(tableData, b -> true);
+        search_field.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(company -> {
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+            String lowerCaseFilter = newValue.toLowerCase();
+            return String.valueOf(company.getId()).contains(lowerCaseFilter) ||
+                    company.getName().toLowerCase().contains(lowerCaseFilter) ||
+                    String.valueOf(company.getBalance()).toLowerCase().contains(lowerCaseFilter);
+        }));
+        SortedList<Company> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedList);
     }
 
     private Company getCompanyFromInputData() {

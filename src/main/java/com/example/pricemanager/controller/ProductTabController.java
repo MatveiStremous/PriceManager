@@ -1,10 +1,13 @@
 package com.example.pricemanager.controller;
 
+import com.example.pricemanager.entity.Company;
 import com.example.pricemanager.entity.Product;
 import com.example.pricemanager.message.Action;
 import com.example.pricemanager.service.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -57,6 +60,12 @@ public class ProductTabController implements Controller {
     private Button updateButton;
 
     @FXML
+    private Button saveButton;
+
+    @FXML
+    private TextField search_field;
+
+    @FXML
     void initialize() {
         if (currentProduct != null) {
             updateCurrentProductArea();
@@ -69,6 +78,11 @@ public class ProductTabController implements Controller {
         col_average_selling_price.setCellValueFactory(new PropertyValueFactory<>("averageSellingPrice"));
 
         loadDataFromDB();
+    }
+
+    @FXML
+    void onClickSaveButton() {
+        Service.printToPDF(table);
     }
 
     private void updateCurrentProductArea() {
@@ -166,6 +180,22 @@ public class ProductTabController implements Controller {
         List<Product> tempList = (List<Product>) client.readObject();
         tableData = FXCollections.observableArrayList(tempList);
         table.setItems(tableData);
+        routesSearch();
+    }
+
+    private void routesSearch() {
+        FilteredList<Product> filteredList = new FilteredList<>(tableData, b -> true);
+        search_field.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(product -> {
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+            String lowerCaseFilter = newValue.toLowerCase();
+            return String.valueOf(product.getId()).contains(lowerCaseFilter) ||
+                    product.getName().toLowerCase().contains(lowerCaseFilter);
+        }));
+        SortedList<Product> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedList);
     }
 
     private Product getProductFromInputData() {

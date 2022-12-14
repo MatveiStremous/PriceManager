@@ -2,6 +2,7 @@ package com.example.pricemanager.controller;
 
 import com.example.pricemanager.dto.ChartDto;
 import com.example.pricemanager.message.Action;
+import com.example.pricemanager.service.Service;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -55,4 +56,10 @@ public class StatisticTabController implements Controller {
         }
         chart.getData().add(valueSeries);
     }
+
+    @FXML
+    void onClickSaveButton() {
+        Service.printToPDF(chart);
+    }
+
 }

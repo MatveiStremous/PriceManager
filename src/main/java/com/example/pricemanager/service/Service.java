@@ -3,10 +3,14 @@ package com.example.pricemanager.service;
 import com.example.pricemanager.Application;
 import com.example.pricemanager.connection.Client;
 import javafx.fxml.FXMLLoader;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -56,5 +60,14 @@ public class Service {
         }
         wrapper.getChildren().removeAll();
         wrapper.getChildren().setAll(fxml);
+    }
+
+    public static void printToPDF(Node node){
+        PrinterJob job = PrinterJob.createPrinterJob();
+        if (job != null) {
+            job.showPrintDialog(node.getScene().getWindow());
+            job.printPage(node);
+            job.endJob();
+        }
     }
 }
